@@ -7,6 +7,12 @@ const merchantRoutes = require("./src/routes/merchantRoute");
 
 dotenv.config();
 
+if (!process.env.MONGO_URI) {
+  console.warn(
+    "Shop.Co: MONGO_URI is not set. Add it in Render → Environment (Atlas URI)."
+  );
+}
+
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -14,6 +20,9 @@ const PORT = process.env.PORT || 4000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
+// Render / load balancer health check (must exist if Health Check Path is /healthz)
+app.get("/healthz", (_req, res) => res.status(200).send("ok"));
 
 // Routes
 app.use("/api/users", userRoutes); // Mount user routes under /api/users or root?
@@ -79,14 +88,12 @@ app.post('/upload', upload.single('productImage'), (req, res) => {
     }
 });
 
-// MongoDB Connection
-mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/backend")
-    .then(() => {
-        console.log("Connected to MongoDB established");
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error("MongoDB connection error:", err);
-    });
+// MongoDB (non-blocking — server listens so /healthz works during DB startup)
+mongoose
+    .connect(process.env.MONGO_URI || "mongodb://localhost:27017/backend")
+    .then(() => console.log("Connected to MongoDB established"))
+    .catch((err) => console.error("MongoDB connection error:", err));
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
