@@ -15,88 +15,22 @@ import g1 from "../../components/Assets/tanish-assets/Frame 63.png";
 import Newarrival from "./Homepage/Newarrival";
 import Topselling from "./Homepage/Topselling";
 import Footer from "./Homepage/Footer";
+import StorefrontPreview from "./Homepage/StorefrontPreview";
 
+import UserDashboard from "./userDashboard";
+import NewCard from "./Homepage/NewCard";
 
 export default function Homepage() {
   return (
     <div className="w-full bg-white font-sans">
 
-      {/* Hero Section */}
-      <section className="relative max-w-[1560px] mx-auto min-h-[663px] md:h-[663px] overflow-hidden flex items-center justify-center p-4">
-        {/* Background Image */}
-        <img
-          src={heroImage}
-          alt="Hero Background"
-          className="absolute top-0 left-0 w-full h-full object-cover object-top"
-        />
-
-        {/* Content */}
-        <div
-          className="relative z-10 w-full max-w-[700px] flex flex-col items-start p-4 md:p-0 content-movable"
-          style={{ marginTop: '0px', marginLeft: '0px', marginRight: '600px' }} // Adjust these values to move all content in any direction
-        >
-          {/* Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-[72px] font-bold leading-[1.1] text-black w-full text-left" style={{ fontFamily: "Integral CF, sans-serif", marginBottom: '12px', marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>
-            FIND CLOTHES THAT MATCHES YOUR STYLE
-          </h1>
-
-          {/* Paragraph */}
-          <p
-            className="text-base leading-relaxed text-black w-full text-left"
-            style={{
-              fontFamily: "Satoshi, sans-serif",
-              fontWeight: 400,
-              marginBottom: "32px",
-              marginTop: "0px",
-              marginLeft: "0px",
-              marginRight: "0px"
-            }}
-          >
-            Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
-          </p>
-
-          {/* CTA Button */}
-          <div className="w-full flex justify-start">
-            <button
-              className="font-semibold rounded-[62px] flex items-center justify-center"
-              style={{
-                width: "210px",
-                height: "52px",
-                padding: "16px 54px",
-                background: "#000000",
-                color: "#FFFFFF",
-                gap: "12px",
-                marginBottom: "40px",
-                marginTop: "0px",
-                marginLeft: "0px",
-                marginRight: "0px"
-              }}
-            >
-              Shop Now
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="w-full flex justify-start items-center py-6" style={{ marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>
-            <div className="flex w-full max-w-[700px] justify-between items-center text-black">
-              <div className="flex-1 text-left">
-                <h3 className="text-[2rem] font-bold" style={{ fontFamily: 'Integral CF, sans-serif', marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>200+</h3>
-                <p className="text-base text-black/80" style={{ fontFamily: 'Satoshi, sans-serif', marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>International Brands</p>
-              </div>
-              <div className="h-12 w-px bg-gray-300 mx-4"></div>
-              <div className="flex-1 text-left">
-                <h3 className="text-[2rem] font-bold" style={{ fontFamily: 'Integral CF, sans-serif', marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>2,000+</h3>
-                <p className="text-base text-black/80" style={{ fontFamily: 'Satoshi, sans-serif', marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>High-Quality Products</p>
-              </div>
-              <div className="h-12 w-px bg-gray-300 mx-4"></div>
-              <div className="flex-1 text-left">
-                <h3 className="text-[2rem] font-bold" style={{ fontFamily: 'Integral CF, sans-serif', marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>30,000+</h3>
-                <p className="text-base text-black/80" style={{ fontFamily: 'Satoshi, sans-serif', marginTop: '0px', marginLeft: '0px', marginRight: '0px' }}>Happy Customers</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* User Dashboard Section replaces Hero */}
+      <section className="relative max-w-[1560px] mx-auto min-h-[663px] overflow-hidden p-4">
+        <UserDashboard />
       </section>
+
+      {/* Storefront Preview */}
+      <StorefrontPreview />
 
       {/* Brand Strip */}
       <section className="flex flex-wrap justify-center items-center gap-6 sm:gap-10 md:gap-20 py-8 bg-black text-white">
@@ -107,6 +41,7 @@ export default function Homepage() {
         <img src={calvinklein} alt="Calvin Klein" className="h-8 sm:h-10 md:h-12 w-auto object-contain" />
       </section>
 
+      <NewCard />
 
       <div>
         {/* Newarrival section */}
@@ -118,12 +53,6 @@ export default function Homepage() {
         <div id="topselling">
           <Topselling />
         </div>
-
-
-
-
-
-
       </div>
 
       {/* Browse by Dress Style */}
@@ -218,9 +147,6 @@ export default function Homepage() {
         </div>
       </section>
       <Footer />
-
-
-
-    </div>
+    </div >
   );
 }

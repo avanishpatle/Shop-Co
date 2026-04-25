@@ -58,12 +58,12 @@ export default function Navbar() {
       }
     };
 
-    if (location.pathname === "/") {
+    if (location.pathname === "/home") {
       // Already on homepage, scroll directly
       scrollToSection();
     } else {
       // Navigate to homepage, then scroll after slight delay
-      navigate(`/#${id}`);
+      navigate(`/home#${id}`);
       setTimeout(() => {
         scrollToSection();
       }, 300); // 300ms delay to allow page to mount
@@ -110,7 +110,7 @@ export default function Navbar() {
             {/* Left: Logo + Links */}
             <div className="flex items-center gap-12">
               <div className="flex-shrink-0 text-2xl font-extrabold tracking-tight">
-                <Link to="/" className="inline-block">SHOP.CO</Link>
+                <Link to="/home" className="inline-block">SHOP.CO</Link>
               </div>
 
               <nav className="hidden lg:flex items-center gap-10 text-base text-gray-700">

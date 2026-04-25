@@ -596,7 +596,7 @@ export default function LoginForm() {
   }
 
   const handleSuccessComplete = () => {
-    navigate("/");
+    navigate("/home");
   };
 
   return (

@@ -24,7 +24,9 @@ import Insights from "./Merchant/Insights";
 import Settings from "./Merchant/Settings";
 import Onboarding from "./Merchant/Onboarding";
 import MerchantLogin from "./Merchant/MerchantLogin";
-
+import LandingHero from "./components/ui/LandingHero";
+import { useNavigate } from "react-router-dom";
+import SearchPage from "./User/pages/Search/SearchPage";
 
 // Layout with Navbar
 function MainLayout() {
@@ -38,18 +40,36 @@ function MainLayout() {
   );
 }
 
-import SearchPage from "./User/pages/Search/SearchPage";
+
+{/* Publicly available with Navbar */ }
+// Landing Page Wrappe
+const LandingWrapper = () => {
+  const navigate = useNavigate();
+  return (
+    <LandingHero
+      onSelectCustomer={() => navigate('/login')}
+      onSelectMerchant={() => navigate('/merchant/login')}
+
+    />
+  );
+};
+
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <Routes>
+          {/* Landing Page Route */}
+          <Route path="/" element={<LandingWrapper />} />
+
+
           {/* Publicly available with Navbar */}
           <Route element={<MainLayout />}>
-            <Route path="/" element={<Homepage />} />
+            <Route path="/home" element={<Homepage />} />
             <Route path="/search" element={<SearchPage />} />
           </Route>
+
 
           {/* Protected Routes with Navbar */}
           <Route element={<MainLayout />}>

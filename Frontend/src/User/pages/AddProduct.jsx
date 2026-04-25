@@ -6,8 +6,7 @@ import { toast } from "sonner";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Homepage/Footer";
 
-// ✅ DATA: List of Categories and Sub-categories
-// We keep this outside the component to make the code cleaner.
+
 const categoryData = {
   electronics: [
     "mobiles", "laptops", "tablets", "headphones", "cameras",

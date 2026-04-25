@@ -101,16 +101,7 @@ const getAllProducts = async (req, res) => {
   try {
     let filter = {};
 
-    // Check if user is logged in
-    // Note: getAllProducts might be public, so req.user might be undefined if no auth middleware was used.
-    // However, the text implies that for "normal user / customer" it returns all.
-    // If the valid token is present (auth middleware runs), we check role.
-
-    // Assuming auth middleware populates req.user if token is present, even if route is optionally authenticated.
-    // Or if the route is protected.
-    // If route is public for customers but used by merchants, we need conditional logic.
-
-    // Based on user prompt "When the logged-in user is a merchant...", it implies they are logged in.
+ 
     if (req.user && req.user.role === "merchant" && req.user.merchantId) {
       filter.merchantId = req.user.merchantId;
     }
