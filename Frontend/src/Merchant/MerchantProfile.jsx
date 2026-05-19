@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Mail, Phone, MapPin, Building2, FileText, User } from 'lucide-react';
 import Cookies from 'js-cookie';
@@ -12,7 +13,7 @@ const MerchantProfile = () => {
                 const token = Cookies.get('token');
                 if (!token) return;
 
-                const res = await fetch('http://localhost:4000/merchant/profile', {
+                const res = await fetch(`${API_URL}/merchant/profile`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

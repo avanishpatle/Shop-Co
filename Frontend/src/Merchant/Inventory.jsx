@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { Search, Filter, Plus, MoreVertical } from 'lucide-react';
@@ -15,7 +16,7 @@ const Inventory = () => {
                 const token = Cookies.get('token');
                 if (!token) return;
 
-                const res = await fetch('http://localhost:4000/merchant/products', {
+                const res = await fetch(`${API_URL}/merchant/products`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

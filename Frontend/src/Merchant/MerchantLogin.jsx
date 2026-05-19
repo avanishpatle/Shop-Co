@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -65,7 +66,7 @@ const MerchantLogin = () => {
         try {
             const loginData = { email, password };
 
-            const response = await fetch('http://localhost:4000/merchant/login', {
+            const response = await fetch(`${API_URL}/merchant/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(loginData),

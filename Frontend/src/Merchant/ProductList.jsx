@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import { MoreVertical, Plus, Filter, Search, Loader } from 'lucide-react';
 import Cookies from "js-cookie";
@@ -20,7 +21,7 @@ const ProductList = ({ onAddNew }) => {
                     'Authorization': `Bearer ${token}`
                 };
 
-                const url = `http://localhost:4000/merchant-get-product?q=${query}&sort=latest`;
+                const url = `${API_URL}/merchant-get-product?q=${query}&sort=latest`;
                 const response = await fetch(url, { headers });
                 const data = await response.json();
 

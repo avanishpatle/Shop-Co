@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Bell, Menu, ShoppingCart, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -19,7 +20,7 @@ const Header = ({ onMenuClick }) => {
         const delayDebounceFn = setTimeout(async () => {
             if (query.trim()) {
                 try {
-                    const res = await fetch(`http://localhost:4000/getProductsByQuery?productName=${query}`);
+                    const res = await fetch(`${API_URL}/getProductsByQuery?productName=${query}`);
                     const data = await res.json();
                     if (res.ok) {
                         setResults(data.products || []);

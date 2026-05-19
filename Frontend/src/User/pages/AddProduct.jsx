@@ -1,3 +1,4 @@
+import { API_URL } from "../../config";
 import React, { useState } from "react";
 // Cookies is used to get the login token
 import Cookies from "js-cookie";
@@ -79,7 +80,7 @@ export default function AddProductUI({ isMerchant = false }) {
         const formData = new FormData();
         formData.append("productImage", file);
 
-        const res = await fetch("http://localhost:4000/upload", {
+        const res = await fetch(`${API_URL}/upload`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -153,8 +154,8 @@ export default function AddProductUI({ isMerchant = false }) {
 
       // 4. Send request to backend
       const endpoint = isMerchant
-        ? "http://localhost:4000/merchant/products"
-        : "http://localhost:4000/addProducts";
+        ? `${API_URL}/merchant/products`
+        : `${API_URL}/addProducts`;
 
       const response = await fetch(endpoint, {
         method: "POST",
