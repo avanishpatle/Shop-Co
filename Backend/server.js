@@ -9,20 +9,34 @@ dotenv.config();
 
 if (!process.env.MONGO_URI) {
   console.warn(
-    "Shop.Co: MONGO_URI is not set. Add it in Render → Environment (Atlas URI)."
+    "Shop.Co: MONGO_URI is not set. Add it in Render → Environment (MongoDB Atlas URI)."
   );
 }
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+const isDbReady = () => mongoose.connection.readyState === 1;
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-// Render / load balancer health check (must exist if Health Check Path is /healthz)
-app.get("/healthz", (_req, res) => res.status(200).send("ok"));
+// Render health check — fails if MongoDB is not connected
+app.get("/healthz", (_req, res) => {
+  if (isDbReady()) return res.status(200).send("ok");
+  return res.status(503).send("database disconnected");
+});
+
+// API routes need an active MongoDB connection
+app.use((req, res, next) => {
+  if (req.path === "/healthz") return next();
+  if (isDbReady()) return next();
+  return res.status(503).json({
+    msg: "Database unavailable. Add MONGO_URI in Render (MongoDB Atlas connection string).",
+  });
+});
 
 // Routes — mount at / and /api so both /login and /api/login work
 app.use("/", userRoutes);
@@ -83,11 +97,20 @@ app.post('/upload', upload.single('productImage'), (req, res) => {
     }
 });
 
-// MongoDB (non-blocking — server listens so /healthz works during DB startup)
+const mongoUri =
+  process.env.MONGO_URI || "mongodb://127.0.0.1:27017/shopco";
+
 mongoose
-    .connect(process.env.MONGO_URI || "mongodb://localhost:27017/backend")
-    .then(() => console.log("Connected to MongoDB established"))
-    .catch((err) => console.error("MongoDB connection error:", err));
+  .connect(mongoUri, { serverSelectionTimeoutMS: 15000 })
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => {
+    console.error("MongoDB connection error:", err.message);
+    if (process.env.NODE_ENV === "production") {
+      console.error(
+        "Set MONGO_URI in Render → Environment (Atlas: Network Access 0.0.0.0/0)."
+      );
+    }
+  });
 
 // ==========================================
 // 🚀 PRODUCTION DEPLOYMENT: Serve Frontend
