@@ -24,16 +24,11 @@ app.use(cors());
 // Render / load balancer health check (must exist if Health Check Path is /healthz)
 app.get("/healthz", (_req, res) => res.status(200).send("ok"));
 
-// Routes
-app.use("/api/users", userRoutes); // Mount user routes under /api/users or root?
-// User routes include /login, /addUser etc. Usually these are /api/addUser or just /addUser.
-// The previous code mounted at / and /api.
-// To avoid breaking frontend which calls /login, /getAllProducts etc, I should mount at / or /api depending on frontend.
-// Let's assume standard behavior: Keep them at root relative to the mount point if the paths in route files don't have prefixes.
-// userRoute has /addUser. If I mount at /, it is /addUser.
-// merchantRoute has /merchant/...
+// Routes — mount at / and /api so both /login and /api/login work
 app.use("/", userRoutes);
 app.use("/", merchantRoutes);
+app.use("/api", userRoutes);
+app.use("/api", merchantRoutes);
 
 const path = require("path");
 const multer = require("multer");
@@ -93,6 +88,20 @@ mongoose
     .connect(process.env.MONGO_URI || "mongodb://localhost:27017/backend")
     .then(() => console.log("Connected to MongoDB established"))
     .catch((err) => console.error("MongoDB connection error:", err));
+
+// ==========================================
+// 🚀 PRODUCTION DEPLOYMENT: Serve Frontend
+// ==========================================
+if (process.env.NODE_ENV === "production" || process.env.SERVE_FRONTEND === "true") {
+    // Serve frontend dist files
+    const frontendDistPath = path.join(__dirname, '..', 'Frontend', 'dist');
+    app.use(express.static(frontendDistPath));
+
+    // For any other route, send the React index.html
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(frontendDistPath, 'index.html'));
+    });
+}
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
