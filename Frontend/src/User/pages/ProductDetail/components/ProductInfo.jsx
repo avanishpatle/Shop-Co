@@ -1,3 +1,4 @@
+import { API_URL } from "../../../../config";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -80,7 +81,7 @@ export default function ProductInfo({ product }) {
         }
 
         try {
-            const response = await fetch("http://localhost:4000/addToCart", {
+            const response = await fetch(`${API_URL}/addToCart`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

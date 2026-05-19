@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import React, { useState, useEffect } from "react";
 import { ChevronRight, ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
 import ProductCard from "./ProductCard";
@@ -13,7 +14,7 @@ const Product = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:4000/getAllProducts");
+        const res = await fetch(`${API_URL}/getAllProducts`);
         if (res.ok) {
           const data = await res.json();
           // Map backend product structure to frontend structure

@@ -1,3 +1,4 @@
+import { API_URL } from "../../config";
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 // import loginhero from "../Components/Assets/tanish-assets/loginhero.jpg";
@@ -271,7 +272,7 @@
 //     setLoading(true);
 
 //     try {
-//       const response = await fetch("http://localhost:4000/login", {
+//       const response = await fetch(`${API_URL}/login`, {
 //         method: "POST",
 //         headers: {
 //           "Content-Type": "application/json",
@@ -508,7 +509,7 @@ import {
   ToggleButtonGroup
 } from "@mui/material";
 
-import LoginSuccessModal from "../Modals/LoginSuccessModal";
+import LoginSuccessModal from "../modals/LoginSuccessModal";
 
 export default function LoginForm() {
   const theme = useTheme();
@@ -537,7 +538,7 @@ export default function LoginForm() {
     }
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:4000/send-otp", {
+      const response = await fetch(`${API_URL}/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -563,11 +564,11 @@ export default function LoginForm() {
     setLoading(true);
 
     try {
-      let url = "http://localhost:4000/login";
+      let url = `${API_URL}/login`;
       let body = { email, password };
 
       if (loginMethod === 'otp') {
-        url = "http://localhost:4000/login-otp";
+        url = `${API_URL}/login-otp`;
         body = { email, otp };
       }
 

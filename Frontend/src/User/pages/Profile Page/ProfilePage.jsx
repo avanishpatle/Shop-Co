@@ -1,9 +1,10 @@
+import { API_URL } from "../../../config";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 /* ================= CONFIG ================= */
 
-const API_BASE_URL = "http://localhost:4000";
+const API_BASE_URL = `${API_URL}`;
 
 /* ================= EDIT MODAL ================= */
 

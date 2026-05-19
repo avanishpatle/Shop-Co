@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 
@@ -25,7 +26,7 @@ const SearchPage = () => {
             setLoading(true);
             try {
                 // Assuming backend is on port 4000
-                const response = await fetch(`http://localhost:4000/search?q=${query}&limit=12`);
+                const response = await fetch(`${API_URL}/search?q=${query}&limit=12`);
                 const result = await response.json();
 
                 if (result.success) {

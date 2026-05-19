@@ -1,6 +1,6 @@
 import React from 'react';
 import Cookies from 'js-cookie';
-import AccessRestricted from './Modals/AccessRestricted';
+import AccessRestricted from './modals/AccessRestricted';
 
 const ProtectedRoute = ({ children }) => {
     const token = Cookies.get('token');

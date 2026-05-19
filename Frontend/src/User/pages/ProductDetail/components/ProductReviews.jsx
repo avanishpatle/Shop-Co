@@ -1,3 +1,4 @@
+import { API_URL } from "../../../../config";
 import React, { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { useParams } from "react-router-dom";
@@ -68,7 +69,7 @@ export default function ProductReviews() {
     const fetchReviews = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:4000/products/${id}/reviews`);
+            const response = await fetch(`${API_URL}/products/${id}/reviews`);
             if (response.ok) {
                 const data = await response.json();
                 setReviews(data.reviews || []);
@@ -83,7 +84,7 @@ export default function ProductReviews() {
 
     const fetchAverageRating = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/reviews/average-rating?productId=${id}`);
+            const response = await fetch(`${API_URL}/reviews/average-rating?productId=${id}`);
             if (response.ok) {
                 const data = await response.json();
                 setAverageRating(data.averageRating || 0);
@@ -111,7 +112,7 @@ export default function ProductReviews() {
                 headers["Authorization"] = `Bearer ${token}`;
             }
 
-            const response = await fetch(`http://localhost:4000/products/${id}/reviews`, {
+            const response = await fetch(`${API_URL}/products/${id}/reviews`, {
                 method: "POST",
                 headers: headers,
                 body: JSON.stringify({

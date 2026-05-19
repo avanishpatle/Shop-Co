@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import React, { useEffect, useState } from "react";
 import { ChevronRight, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +35,7 @@ const Cart = () => {
 
       // 1. Fetch Backend Cart
       try {
-        const response = await fetch("http://localhost:4000/getCart", {
+        const response = await fetch(`${API_URL}/getCart`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -132,7 +133,7 @@ const Cart = () => {
       // Backend Delete
       if (itemToRemove && itemToRemove.productId?._id) {
         try {
-          const response = await fetch(`http://localhost:4000/removeItem/${itemToRemove.productId._id}`, {
+          const response = await fetch(`${API_URL}/removeItem/${itemToRemove.productId._id}`, {
             method: "DELETE",
             headers: {
               Authorization: `Bearer ${token}`,

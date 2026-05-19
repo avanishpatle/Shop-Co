@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Package, DollarSign, Star, ShoppingCart, Sparkles, ArrowRight } from 'lucide-react';
 import StatCard from './StatCard';
@@ -26,7 +27,7 @@ const DashboardHome = () => {
                 const headers = { 'Authorization': `Bearer ${token}` };
 
                 // 1. Fetch Profile
-                const profileRes = await fetch('http://localhost:4000/merchant/profile', { headers });
+                const profileRes = await fetch(`${API_URL}/merchant/profile`, { headers });
                 const profileData = await profileRes.json();
                 if (profileRes.ok) {
                     setMerchant(profileData.merchant);
@@ -35,7 +36,7 @@ const DashboardHome = () => {
 
                 // 2. Fetch ALL Products (for Inventory & Rating Stats + Recent List)
                 // We fetch sorted by latest to use for the list, but get all to calculate stats
-                const productRes = await fetch('http://localhost:4000/merchant/products?sort=latest', { headers });
+                const productRes = await fetch(`${API_URL}/merchant/products?sort=latest`, { headers });
                 const productData = await productRes.json();
 
                 let products = [];
@@ -69,7 +70,7 @@ const DashboardHome = () => {
                 // 4. Fetch Top Rated Product (Optional: Keep using the optimized endpoint or derive from list)
                 // Since we have the list, we could find top rated here, but the dedicated endpoint is efficient for details.
                 // Keeping existing logic for Black Card.
-                const topRes = await fetch('http://localhost:4000/merchant/top-rated', { headers });
+                const topRes = await fetch(`${API_URL}/merchant/top-rated`, { headers });
                 const topData = await topRes.json();
                 if (topRes.ok) {
                     setTopRatedProduct(topData.product);

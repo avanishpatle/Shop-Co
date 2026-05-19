@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState, useRef } from 'react';
 import {
     Building2, User, Mail, Phone, Lock, Camera,
@@ -62,7 +63,7 @@ const Onboarding = ({ onComplete }) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:4000/merchant-onboard', {
+            const response = await fetch(`${API_URL}/merchant-onboard`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,3 +1,4 @@
+import { API_URL } from "../../config";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -29,7 +30,7 @@ export default function Signup() {
     console.log("Sending signup data:", formData); // Debug log
 
     try {
-      const response = await fetch("http://localhost:4000/addUser", {
+      const response = await fetch(`${API_URL}/addUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

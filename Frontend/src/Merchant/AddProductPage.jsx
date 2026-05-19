@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductForm from './ProductForm';
@@ -41,7 +42,7 @@ const AddProductPage = () => {
                 productImages: ['https://picsum.photos/seed/new/300'] // Placeholder until image upload is added to form
             };
 
-            const res = await fetch('http://localhost:4000/merchant-add-product', {
+            const res = await fetch(`${API_URL}/merchant-add-product`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

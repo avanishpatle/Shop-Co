@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ShoppingCart, User, Menu, X, Search, LogOut } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import SignOutModal from "../../Modals/SignOutModal";
+import SignOutModal from "../../modals/SignOutModal";
 
 export default function Navbar() {
   const PROMO_HEIGHT = 32; // px (h-8)

@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -48,7 +49,7 @@ export default function ProductDetailPage() {
 
             // If not found in static, try backend
             try {
-                const res = await fetch(`http://localhost:4000/getProductById/${id}`);
+                const res = await fetch(`${API_URL}/getProductById/${id}`);
                 if (res.ok) {
                     const responseData = await res.json();
                     const backendProduct = responseData.product;

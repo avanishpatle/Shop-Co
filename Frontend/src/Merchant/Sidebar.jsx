@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
@@ -85,7 +86,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                     <button
                         onClick={() => {
                             // Call API
-                            fetch('http://localhost:4000/api/merchants/merchant-logout', {
+                            fetch(`${API_URL}/api/merchants/merchant-logout`, {
                                 method: 'POST',
                                 headers: {
                                     'Authorization': `Bearer ${Cookies.get('token')}`
