@@ -109,17 +109,21 @@ if (process.env.MONGO_URI) {
   console.warn("MONGO_URI is missing — using local fallback mongodb://127.0.0.1:27017/shopco");
 }
 
-mongoose
-  .connect(mongoUri, { serverSelectionTimeoutMS: 15000 })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => {
+const connectMongo = async () => {
+  try {
+    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 15000 });
+    console.log("Connected to MongoDB");
+  } catch (err) {
     console.error("MongoDB connection error:", err.message);
-    if (process.env.NODE_ENV === "production") {
-      console.error(
-        "Set MONGO_URI in Render → Environment (Atlas: Network Access 0.0.0.0/0)."
-      );
-    }
-  });
+    console.error(
+      "Check: Atlas Network Access 0.0.0.0/0, MONGO_URI password, /shopco in URI."
+    );
+    console.error("Retrying in 30s...");
+    setTimeout(connectMongo, 30000);
+  }
+};
+
+connectMongo();
 
 // Frontend is deployed on Vercel — this service is API-only (no app.get('*') — breaks Express 5)
 
