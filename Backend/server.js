@@ -34,7 +34,8 @@ app.use((req, res, next) => {
   if (req.path === "/healthz") return next();
   if (isDbReady()) return next();
   return res.status(503).json({
-    msg: "Database unavailable. Add MONGO_URI in Render (MongoDB Atlas connection string).",
+    msg:
+      "Database unavailable. In Atlas: Network Access → allow 0.0.0.0/0. In Render: set MONGO_URI.",
   });
 });
 
@@ -99,6 +100,14 @@ app.post('/upload', upload.single('productImage'), (req, res) => {
 
 const mongoUri =
   process.env.MONGO_URI || "mongodb://127.0.0.1:27017/shopco";
+
+mongoose.set("bufferCommands", false);
+
+if (process.env.MONGO_URI) {
+  console.log("MONGO_URI is set (connecting to Atlas)...");
+} else {
+  console.warn("MONGO_URI is missing — using local fallback mongodb://127.0.0.1:27017/shopco");
+}
 
 mongoose
   .connect(mongoUri, { serverSelectionTimeoutMS: 15000 })
