@@ -112,19 +112,7 @@ mongoose
     }
   });
 
-// ==========================================
-// 🚀 PRODUCTION DEPLOYMENT: Serve Frontend
-// ==========================================
-if (process.env.NODE_ENV === "production" || process.env.SERVE_FRONTEND === "true") {
-    // Serve frontend dist files
-    const frontendDistPath = path.join(__dirname, '..', 'Frontend', 'dist');
-    app.use(express.static(frontendDistPath));
-
-    // For any other route, send the React index.html
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(frontendDistPath, 'index.html'));
-    });
-}
+// Frontend is deployed on Vercel — this service is API-only (no app.get('*') — breaks Express 5)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
