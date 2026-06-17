@@ -149,31 +149,40 @@ const loginUser = async (req, res) => {
 
 const sendOtp = async (req, res) => {
     try {
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({
+                msg: "Database unavailable. Try again after the server connects to MongoDB.",
+            });
+        }
+
         const { email } = req.body;
         if (!email) {
             return res.status(400).json({ msg: "Email is required" });
         }
 
-        const user = await userModel.findOne({ email });
+        const user = await userModel.findOne({ email: email.trim() });
         if (!user) {
-            return res.status(404).json({ msg: "User not found" });
+            return res.status(404).json({ msg: "User not found. Sign up first." });
         }
 
-        // Generate 6 digit OTP
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
 
-        // Save to user
         user.otp = otp;
-        user.otpExpires = Date.now() + 5 * 60 * 1000; // 5 minutes
+        user.otpExpires = Date.now() + 5 * 60 * 1000;
         await user.save();
 
+        // Email is not configured yet — OTP is logged on the server (Render logs)
         console.log(`OTP for ${email}: ${otp}`);
 
-        return res.status(200).json({ msg: "OTP sent to your email" });
-
+        return res.status(200).json({
+            msg: "OTP generated. Check server logs if email is not configured.",
+        });
     } catch (error) {
-        console.log(error);
-        return res.status(500).json({ msg: "Internal Server Error" });
+        console.error("sendOtp error:", error);
+        return res.status(500).json({
+            msg: "Internal Server Error",
+            error: process.env.NODE_ENV === "development" ? error.message : undefined,
+        });
     }
 };
 

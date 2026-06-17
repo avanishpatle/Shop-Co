@@ -39,6 +39,7 @@ const {
     getAllProducts,
     getProductById,
     getProductsByQuery,
+    searchProducts,
 } = require("../controllers/Merchant/productController"); // Public product routes
 
 const authMiddleware = require("../middleware/authMiddleware");
@@ -56,6 +57,7 @@ Route.post("/login-otp", loginWithOtp);
 Route.get("/getAllProducts", getAllProducts);
 Route.get("/getProductById/:id", getProductById);
 Route.get("/getProductsByQuery", getProductsByQuery);
+Route.get("/search", searchProducts);
 
 // Reviews
 Route.post("/products/:productId/reviews", authMiddleware, addReview);

@@ -355,6 +355,30 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const searchProducts = async (req, res) => {
+  try {
+    const { q, limit } = req.query;
+    if (!q) {
+      return res.status(200).json({ success: true, data: [] });
+    }
+    const filter = {
+      $or: [
+        { productName: { $regex: q, $options: "i" } },
+        { category: { $regex: q, $options: "i" } },
+        { description: { $regex: q, $options: "i" } },
+      ],
+    };
+    const maxLimit = limit ? parseInt(limit, 10) : 12;
+    const products = await productModel.find(filter).limit(maxLimit);
+    return res.status(200).json({ success: true, data: products });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ success: false, msg: "Internal Server Error", error: error.message });
+  }
+};
+
 module.exports = {
   addProducts,
   getAllProducts,
@@ -362,4 +386,5 @@ module.exports = {
   getProductsByQuery,
   updateProduct,
   deleteProduct,
+  searchProducts,
 };
